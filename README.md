@@ -33,7 +33,7 @@ To use this plugin, follow the [**plugin installation instructions**](https://pu
 Add the following import to your Dart code:
 
 ```dart
-import 'package:screenshot_callback/screenshot_callback.dart';
+import 'package:screenshot_callback_fix/screenshot_callback_fix.dart';
 ```
 
 Initialize ScreenshotCallback with the scopes you want:
