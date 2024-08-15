@@ -54,6 +54,22 @@ screenshotCallback.addListener(() {
 });
 ```
 
+### Android Permissions
+
+android 13 Permissions add
+
+```xml
+<uses-permission android:name="android.permission.READ_MEDIA_IMAGES"/>
+```
+and user allow permission photos and video
+
+use [**permission_handler**](https://pub.dev/packages/permission_handler) and add permission
+
+```dart
+await Permission.photos.request();
+```
+
+
 ### dispose
 
 You need to call <code>dispose</code> method to terminate <code>ScreenshotCallback</code> before you exit the app e.g:
