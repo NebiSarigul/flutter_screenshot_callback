@@ -9,7 +9,7 @@ class ScreenshotCallbackFix {
   /// Functions to execute when callback fired.
   List<VoidCallback> onCallbacks = <VoidCallback>[];
 
-  ScreenshotCallback() {
+  ScreenshotCallbackFix() {
     initialize();
   }
 
