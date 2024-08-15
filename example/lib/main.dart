@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:screenshot_callback/screenshot_callback.dart';
+import 'package:screenshot_callback/screenshot_callback_fix.dart';
 
 void main() => runApp(MyApp());
 
@@ -9,7 +9,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  late ScreenshotCallback screenshotCallback;
+  late ScreenshotCallbackFix screenshotCallback;
 
   String text = "Ready..";
 
@@ -26,7 +26,7 @@ class _MyAppState extends State<MyApp> {
 
   //It must be created after permission is granted.
   Future<void> initScreenshotCallback() async {
-    screenshotCallback = ScreenshotCallback();
+    screenshotCallback = ScreenshotCallbackFix();
 
     screenshotCallback.addListener(() {
       setState(() {

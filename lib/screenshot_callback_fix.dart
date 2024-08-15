@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/services.dart';
 
-class ScreenshotCallback {
+class ScreenshotCallbackFix {
   static const MethodChannel _channel =
       const MethodChannel('flutter.moum/screenshot_callback');
 
