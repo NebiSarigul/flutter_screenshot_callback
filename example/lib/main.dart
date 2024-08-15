@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:screenshot_callback/screenshot_callback.dart';
+import 'package:screenshot_callback/screenshot_callback_fix.dart';
 
 void main() => runApp(MyApp());
 

@@ -56,25 +56,31 @@ public class ScreenshotCallbackPlugin implements MethodCallHandler, FlutterPlugi
             detector = new ScreenshotDetector(applicationContext, new Function1<String, Unit>() {
                 @Override
                 public Unit invoke(String screenshotName) {
-                    if (!screenshotName.equals(lastScreenshotName)) {
+                    if (handler != null && !screenshotName.equals(lastScreenshotName)) {
                         lastScreenshotName = screenshotName;
                         handler.post(new Runnable() {
                             @Override
                             public void run() {
-                                channel.invokeMethod("onCallback", null);
+                                if(channel != null){
+                                    channel.invokeMethod("onCallback", null);
+                                }
                             }
                         });
                     }
                     return null;
                 }
             });
-            detector.start();
+            if (detector != null) {
+                detector.start();
+            }
 
             result.success("initialize");
         } else if (call.method.equals("dispose")) {
-            detector.stop();
-            detector = null;
-            lastScreenshotName = null;
+            if (detector != null) {
+                detector.stop();
+                detector = null;
+                lastScreenshotName = null;
+            }
 
             result.success("dispose");
         } else {
