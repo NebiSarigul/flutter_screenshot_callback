@@ -39,7 +39,7 @@ import 'package:screenshot_callback_fix/screenshot_callback_fix.dart';
 Initialize ScreenshotCallback with the scopes you want:
 
 ```dart
-ScreenshotCallback screenshotCallback = ScreenshotCallback();
+ScreenshotCallbackFix screenshotCallback = ScreenshotCallbackFix();
 ```
 
 ### addListener
