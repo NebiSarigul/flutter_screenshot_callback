@@ -1,6 +1,6 @@
-## 0.1.1
+## 0.1.2
 
-rename screenshot_callback_fix.podspec
+ios: fix ios build
 
 ## 0.1.0
 

@@ -14,7 +14,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  screenshot_callback:
+  screenshot_callback_fix:
     path: ../
 
 flutter:
