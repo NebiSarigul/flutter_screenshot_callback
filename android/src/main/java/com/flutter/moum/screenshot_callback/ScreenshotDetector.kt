@@ -17,6 +17,7 @@ class ScreenshotDetector(private val context: Context,
     fun start() {
         if (contentObserver == null) {
             contentObserver = context.contentResolver.registerObserver()
+
         }
     }
 
@@ -33,12 +34,19 @@ class ScreenshotDetector(private val context: Context,
     }
 
     private fun queryScreenshots(uri: Uri): List<String> {
+        /// as we are not doing anything with the path,
+        /// so just copy uri path and return so it can trigger a callback
+        /// instead of getting into queryDataColumn as its returning 0 length on anycase.
         return try {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                queryRelativeDataColumn(uri)
-            } else {
-                queryDataColumn(uri)
-            }
+            listOf(uri.path.toString())
+
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+//                queryRelativeDataColumn(uri)
+//            } else {
+//                queryDataColumn(uri)
+//            }
+            /// dummy list as 1 length as we are not able to get the screenshot path
+
         }  catch (e:Exception){
             listOf()
         }
@@ -48,14 +56,14 @@ class ScreenshotDetector(private val context: Context,
         val screenshots = mutableListOf<String>()
 
         val projection = arrayOf(
-                MediaStore.Images.Media.DATA
+            MediaStore.Images.Media.DATA
         )
         context.contentResolver.query(
-                uri,
-                projection,
-                null,
-                null,
-                null
+            uri,
+            projection,
+            null,
+            null,
+            null
         )?.use { cursor ->
             val dataColumn = cursor.getColumnIndex(MediaStore.Images.Media.DATA)
 
@@ -67,6 +75,7 @@ class ScreenshotDetector(private val context: Context,
             }
         }
 
+        /// print the total screenshots and say in print that its done
         return screenshots
     }
 
@@ -74,33 +83,27 @@ class ScreenshotDetector(private val context: Context,
         val screenshots = mutableListOf<String>()
 
         val projection = arrayOf(
-                MediaStore.Images.Media.DISPLAY_NAME,
-                MediaStore.Images.Media.RELATIVE_PATH
+            MediaStore.Images.Media.DISPLAY_NAME
         )
-        context.contentResolver.query(
+        try {
+            context.contentResolver.query(
                 uri,
                 projection,
                 null,
                 null,
                 null
-        )?.use { cursor ->
-            val relativePathColumn =
-                    cursor.getColumnIndex(MediaStore.Images.Media.RELATIVE_PATH)
-            val displayNameColumn =
-                    cursor.getColumnIndex(MediaStore.Images.Media.DISPLAY_NAME)
-            while (cursor.moveToNext()) {
-                val name = cursor.getString(displayNameColumn)
-                val relativePath = cursor.getString(relativePathColumn)
-                if (name.contains("screenshot", true) or
-                        relativePath.contains("screenshot", true)
-                ) {
+            )?.use { cursor ->
+                val displayNameColumn = cursor.getColumnIndex(MediaStore.Images.Media.DISPLAY_NAME)
+                while (cursor.moveToNext()) {
+                    val name = cursor.getString(displayNameColumn)
                     screenshots.add(name)
                 }
             }
+        } catch (e: Exception) {
         }
-
         return screenshots
     }
+
 
     private fun ContentResolver.registerObserver(): ContentObserver {
         val contentObserver = object : ContentObserver(Handler(Looper.getMainLooper())) {

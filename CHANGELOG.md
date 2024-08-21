@@ -1,3 +1,7 @@
+## 0.1.4
+
+fix(android): get notified on taking screenshot
+
 ## 0.1.3
 
 ios: fix ios build
