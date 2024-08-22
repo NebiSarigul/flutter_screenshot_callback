@@ -1,3 +1,7 @@
+## 0.1.5
+
+android: The native interaction method has changed from MethodChannel to pigeon
+
 ## 0.1.4
 
 fix(android): get notified on taking screenshot

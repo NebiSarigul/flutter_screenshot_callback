@@ -1,22 +1,27 @@
 import 'dart:async';
 
-import 'package:flutter/services.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:screenshot_callback_fix/plugin/pigeon.g.dart';
+import 'package:screenshot_callback_fix/plugin/screenshot_callback_fix_plugin.dart';
 
 class ScreenshotCallbackFix {
-  static const MethodChannel _channel =
-      const MethodChannel('flutter.moum/screenshot_callback');
+  ScreenShotCallbackFlutterApiImp? flutterApi;
+  ScreenShotCallbackHostApi? hostApi;
 
-  /// Functions to execute when callback fired.
   List<VoidCallback> onCallbacks = <VoidCallback>[];
 
   ScreenshotCallbackFix() {
-    initialize();
-  }
-
-  /// Initializes screenshot callback plugin.
-  Future<void> initialize() async {
-    _channel.setMethodCallHandler(_handleMethod);
-    await _channel.invokeMethod('initialize');
+    hostApi = ScreenShotCallbackHostApi();
+    hostApi?.initialize();
+    // listener screenshot callback.
+    flutterApi = ScreenShotCallbackFlutterApiImp(
+      onScreenShotCallback: () {
+        for (final callback in onCallbacks) {
+          callback();
+        }
+      },
+    );
+    ScreenShotCallbackFlutterApi.setup(flutterApi);
   }
 
   /// Add void callback.
@@ -24,18 +29,10 @@ class ScreenshotCallbackFix {
     onCallbacks.add(callback);
   }
 
-  Future<dynamic> _handleMethod(MethodCall call) async {
-    switch (call.method) {
-      case 'onCallback':
-        for (final callback in onCallbacks) {
-          callback();
-        }
-        break;
-      default:
-        throw ('method not defined');
-    }
-  }
-
   /// Remove callback listener.
-  Future<void> dispose() async => await _channel.invokeMethod('dispose');
+  Future<void> dispose() async {
+    final hostApi = this.hostApi;
+    if (hostApi == null) return;
+    return await hostApi.dispose();
+  }
 }
