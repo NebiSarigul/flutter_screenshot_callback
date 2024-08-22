@@ -1,3 +1,7 @@
+## 0.2.0
+
+update README.md
+
 ## 0.1.6
 
 ios: The native interaction method use MethodChannel
