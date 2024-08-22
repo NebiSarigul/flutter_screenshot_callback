@@ -1,3 +1,7 @@
+## 0.1.6
+
+ios: The native interaction method use MethodChannel
+
 ## 0.1.5
 
 android: The native interaction method has changed from MethodChannel to pigeon
