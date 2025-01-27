@@ -28,12 +28,18 @@ apply plugin: 'kotlin-android'
 android {
     compileSdkVersion 33
 
+    namespace 'com.flutter.moum.screenshot_callback'
+
     defaultConfig {
         minSdkVersion 21
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     lintOptions {
         disable 'InvalidPackage'
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 
@@ -43,4 +49,8 @@ dependencies {
 
 repositories {
     mavenCentral()
+}
+
+kotlinOptions {
+    jvmTarget = "1.8"
 }
