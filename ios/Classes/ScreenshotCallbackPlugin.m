@@ -1,8 +1,0 @@
-#import "ScreenshotCallbackPlugin.h"
-#import <screenshot_callback_fix/screenshot_callback_fix-Swift.h>
-
-@implementation ScreenshotCallbackPlugin
-+ (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
-  [SwiftScreenshotCallbackPlugin registerWithRegistrar:registrar];
-}
-@end
